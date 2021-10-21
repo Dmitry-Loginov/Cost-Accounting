@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Enjoy use!</p>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>@User.Identity.Name</p>
+
+    <form method="post" asp-controller="Account" asp-action="Logout">
+        <input type="submit" value="Выход" class="btn btn-light"/>
+    </form>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign in</a>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Sign up</a>
+}
