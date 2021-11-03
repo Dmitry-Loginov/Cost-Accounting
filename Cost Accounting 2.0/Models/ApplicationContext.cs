@@ -18,16 +18,6 @@ namespace Cost_Accounting_2._0.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Transaction>().Property(t => t.Amount).HasDefaultValue(0);
-
-            //builder.Entity<History>()
-            //    .HasOne(h => h.Transaction)
-            //    .WithMany(t => t.Histories)
-            //    .OnDelete(DeleteBehavior.SetNull);
-
-            //builder.Entity<History>()
-            //    .HasOne(h => h.Account)
-            //    .WithMany(a => a.Histories)
-            //    .OnDelete(DeleteBehavior.SetNull);
             base.OnModelCreating(builder);
         }
     }

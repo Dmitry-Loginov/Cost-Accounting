@@ -1,4 +1,4 @@
-﻿@model Cost_Accounting_2._0.Models.Transaction
+﻿@model Cost_Accounting_2._0.ViewModels.TransactionViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -18,14 +18,18 @@
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreditAccountId" class="control-label"></label>
-                <input asp-for="CreditAccountId" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="Credit"></label>
+                <select asp-for="Credit"
+                        class="form-control"
+                        asp-items="@(new SelectList(Model.CreditListAccounts,"Value", "Text"))">
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="DebitAccountId" class="control-label"></label>
-                <input asp-for="DebitAccountId" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="Debit"></label>
+                <select asp-for="Debit"
+                        class="form-control"
+                        asp-items="@(new SelectList(Model.DebitListAccounts,"Value", "Text"))">
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>

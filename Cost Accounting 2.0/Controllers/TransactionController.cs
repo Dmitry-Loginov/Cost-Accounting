@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Cost_Accounting_2._0.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Cost_Accounting_2._0.ViewModels;
+using System;
 
 namespace Cost_Accounting_2._0.Controllers
 {
@@ -45,7 +48,24 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
-            return View(new Transaction());
+            var accountList = (from account in _context.Accounts
+                                select new SelectListItem()
+                                {
+                                    Text = account.Id.ToString() + " " + account.Name,
+                                    Value = account.Id.ToString(),
+                                }).ToList();
+
+            accountList.Insert(0, new SelectListItem()
+            {
+                Text = "----Select----",
+                Value = string.Empty
+            });
+
+            TransactionViewModel transactionViewModel = new TransactionViewModel();
+            transactionViewModel.CreditListAccounts = accountList;
+            transactionViewModel.DebitListAccounts = accountList;
+
+            return View(transactionViewModel);
         }
 
         // POST: Transaction/Create
@@ -53,16 +73,21 @@ namespace Cost_Accounting_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Amount, CreditAccountId, DebitAccountId, Date")] Transaction transaction)
+        public async Task<IActionResult> Create(TransactionViewModel transactionViewModel)
         {
             if (ModelState.IsValid)
             {
+                Transaction transaction = new Transaction();
                 transaction.User = await UserManager.FindByNameAsync(User.Identity.Name);
+                transaction.Date = transactionViewModel.Date;
+                transaction.Amount = transactionViewModel.Amount;
+                transaction.CreditAccountId = Convert.ToInt32(transactionViewModel.Credit);
+                transaction.DebitAccountId = Convert.ToInt32(transactionViewModel.Debit);
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(transaction);
+            return View(transactionViewModel);
         }
 
         // GET: Transaction/Edit/5
@@ -78,7 +103,27 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 return NotFound();
             }
-            return View(transaction);
+            var accountList = (from account in _context.Accounts
+                               select new SelectListItem()
+                               {
+                                   Text = account.Id.ToString() + " " + account.Name,
+                                   Value = account.Id.ToString(),
+                               }).ToList();
+
+            accountList.Insert(0, new SelectListItem()
+            {
+                Text = "----Select----",
+                Value = string.Empty
+            });
+            return View(new TransactionViewModel {
+                Amount = transaction.Amount,
+                CreditListAccounts = accountList,
+                DebitListAccounts = accountList,
+                Credit = transaction.CreditAccountId.ToString(),
+                Debit = transaction.DebitAccountId.ToString(),
+                Date = transaction.Date,
+                Id = transaction.Id
+            });
         }
 
         // POST: Transaction/Edit/5
@@ -86,9 +131,9 @@ namespace Cost_Accounting_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Amount,Date")] Transaction transaction)
+        public async Task<IActionResult> Edit(int id, TransactionViewModel transactionViewModel)
         {
-            if (id != transaction.Id)
+            if (id != transactionViewModel.Id)
             {
                 return NotFound();
             }
@@ -97,12 +142,17 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 try
                 {
+                    Transaction transaction = await _context.Transactions.FirstOrDefaultAsync(t => t.Id == transactionViewModel.Id);
+                    transaction.Date = transactionViewModel.Date;
+                    transaction.Amount = transactionViewModel.Amount;
+                    transaction.CreditAccountId = Convert.ToInt32(transactionViewModel.Credit);
+                    transaction.DebitAccountId = Convert.ToInt32(transactionViewModel.Debit);
                     _context.Update(transaction);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TransactionExists(transaction.Id))
+                    if (!TransactionExists(transactionViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -113,7 +163,7 @@ namespace Cost_Accounting_2._0.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(transaction);
+            return View(transactionViewModel);
         }
 
         // GET: Transaction/Delete/5
