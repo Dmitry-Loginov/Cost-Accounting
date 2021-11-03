@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Cost_Accounting_2._0.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cost_Accounting_2._0.Controllers
 {
     public class TransactionController : Controller
     {
         private readonly ApplicationContext _context;
+        UserManager<User> UserManager { get; set; }
 
-        public TransactionController(ApplicationContext context)
+        public TransactionController(ApplicationContext context, UserManager<User> userManager)
         {
             _context = context;
+            UserManager = userManager;
         }
 
         // GET: Transaction
@@ -42,7 +45,7 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
-            return View();
+            return View(new Transaction());
         }
 
         // POST: Transaction/Create
@@ -50,10 +53,11 @@ namespace Cost_Accounting_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Amount,Date")] Transaction transaction)
+        public async Task<IActionResult> Create([Bind("Amount, CreditAccountId, DebitAccountId, Date")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
+                transaction.User = await UserManager.FindByNameAsync(User.Identity.Name);
                 _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
