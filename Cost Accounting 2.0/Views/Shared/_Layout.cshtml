@@ -41,7 +41,7 @@
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <div class="dropdown-divider"></div>
-                                    <form method="post" asp-controller="Account" asp-action="Logout" style="text-align:left;">
+                                    <form method="post" asp-controller="UserAccount" asp-action="Logout" style="text-align:left;">
                                         <input type="submit" value="Sign out" class="dropdown-item" />
                                     </form>
                                 }

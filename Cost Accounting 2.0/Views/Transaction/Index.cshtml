@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<Cost_Accounting_2._0.Models.Transaction>
 
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -18,8 +24,7 @@
     <tbody>
 @foreach (var item in Model) {
     if (item.User.UserName == User.Identity.Name)
-    {
-    <tr>
+    {   <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
@@ -33,6 +38,6 @@
             </td>
         </tr>
     }
-    }
+}
     </tbody>
 </table>

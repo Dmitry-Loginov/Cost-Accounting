@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Cost_Accounting_2._0.Models.Transaction>
-
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 <div style="display:flex; flex-direction:row; justify-content: center;">
@@ -33,10 +31,6 @@
 
             </div>
         </div>
-    }
-    else
-    {
-        @await Html.PartialAsync("ListTransactions", Model);
     }
 
 </div>
