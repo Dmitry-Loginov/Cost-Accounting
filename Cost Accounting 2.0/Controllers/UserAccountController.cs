@@ -2,17 +2,17 @@
 using Cost_Accounting_2._0.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Cost_Accounting_2._0.Controllers
 {
-    public class AccountController : Controller
+    public class UserAccountController : Controller
     {
         UserManager<User> _userManager;
         SignInManager<User> _signInManager;
-        RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public UserAccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

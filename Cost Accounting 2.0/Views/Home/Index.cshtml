@@ -1,22 +1,42 @@
-﻿@{
+﻿@model IEnumerable<Cost_Accounting_2._0.Models.Transaction>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+<div style="display:flex; flex-direction:row; justify-content: center;">
+    @if (!User.Identity.IsAuthenticated)
+    {
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Enjoy use!</p>
+        <div class="row" style="width:50%;">
+            <div class="col" style="border: 2px solid gray;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding-bottom:5px;">
+
+                <div class="text-center">
+                    <h2 class="display-4">Welcome. </h2>
+                    <p>Sign in to use</p>
+                </div>
+
+
+                <div style="        display: flex;
+                    -ms-flex-direction: column;
+                    -webkit-flex-direction: column;
+                    flex-direction: column;
+                    -webkit-justify-content: center;
+                    justify-content: center;">
+
+                    <a asp-controller="UserAccount" asp-action="Login" class="btn btn-primary" style="width: 200px; margin:2px auto;">Sign in</a>
+                    <a asp-controller="UserAccount" asp-action="Register" class="btn btn-primary" style="width:200px; margin:2px auto;">Registration</a>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        @await Html.PartialAsync("ListTransactions", Model);
+    }
+
 </div>
-
-@if (User.Identity.IsAuthenticated)
-{
-    <p>@User.Identity.Name</p>
-
-    <form method="post" asp-controller="Account" asp-action="Logout">
-        <input type="submit" value="Выход" class="btn btn-light"/>
-    </form>
-}
-else
-{
-    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Sign in</a>
-    <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Sign up</a>
-}

@@ -1,11 +1,9 @@
 ﻿using Cost_Accounting_2._0.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cost_Accounting_2._0.Controllers
 {
@@ -13,14 +11,17 @@ namespace Cost_Accounting_2._0.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        ApplicationContext Context { get; set; }
+
+        public HomeController(ILogger<HomeController> logger, ApplicationContext context)
         {
             _logger = logger;
+            Context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(Context.Transactions.Include(t => t.User).ToList());
         }
 
         public IActionResult Privacy()
