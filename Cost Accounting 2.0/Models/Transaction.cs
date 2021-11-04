@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cost_Accounting_2._0.Models
@@ -14,5 +15,6 @@ namespace Cost_Accounting_2._0.Models
         public Account DebitAccount { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        public List<History> Histories { get; set; }
     }
 }
