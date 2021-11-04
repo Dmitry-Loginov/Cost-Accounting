@@ -9,5 +9,7 @@ namespace Cost_Accounting_2._0.Models
         public string TypeOperation { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
+        public int TransactionId { get; set; }
+        public Transaction Transaction { get; set; }
     }
 }

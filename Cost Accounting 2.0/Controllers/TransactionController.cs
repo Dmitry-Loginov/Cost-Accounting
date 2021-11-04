@@ -24,7 +24,8 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transactions.Include(t => t.User).ToListAsync());
+            return View(await _context.Transactions.Include(t => t.CreditAccount).ThenInclude(cr => cr.User)
+                .Include(t => t.DebitAccount).ThenInclude(dt => dt.User).ToListAsync());
         }
 
         // GET: Transaction/Details/5
@@ -78,7 +79,6 @@ namespace Cost_Accounting_2._0.Controllers
             if (ModelState.IsValid)
             {
                 Transaction transaction = new Transaction();
-                transaction.User = await UserManager.FindByNameAsync(User.Identity.Name);
                 transaction.Date = transactionViewModel.Date;
                 transaction.Amount = transactionViewModel.Amount;
                 transaction.CreditAccountId = Convert.ToInt32(transactionViewModel.Credit);

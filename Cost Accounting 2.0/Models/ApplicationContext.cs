@@ -18,6 +18,7 @@ namespace Cost_Accounting_2._0.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Transaction>().Property(t => t.Amount).HasDefaultValue(0);
+            builder.Entity<Transaction>().HasOne(t => t.DebitAccount).WithMany(da => da.Transactions).OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(builder);
         }
     }

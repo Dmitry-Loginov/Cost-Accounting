@@ -18,12 +18,12 @@ namespace Cost_Accounting_2._0
             User admin = new User { Email = "admin@mail.ru", UserName = "admin@mail.ru" };
 
             IdentityResult adminResult = null;
-            IdentityResult userResult = null;
+            var userFind = await userManager.FindByIdAsync("admin@mail.ru");
 
-            if (userManager.FindByEmailAsync("admin@mail.ru") != null)
+            if (userFind == null)
                 adminResult = await userManager.CreateAsync(admin, "admin");
 
-            if (adminResult?.Succeeded == true && userResult?.Succeeded == true)
+            if (adminResult?.Succeeded == true)
             {
                 await userManager.AddToRoleAsync(admin, Role.Admin.ToString());
             }
