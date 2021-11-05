@@ -104,11 +104,6 @@ namespace Cost_Accounting_2._0.Controllers
                                    Value = account.Id.ToString(),
                                }).ToList();
 
-            accountList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = string.Empty
-            });
             return View(new TransactionViewModel {
                 Amount = transaction.Amount,
                 CreditListAccounts = accountList,

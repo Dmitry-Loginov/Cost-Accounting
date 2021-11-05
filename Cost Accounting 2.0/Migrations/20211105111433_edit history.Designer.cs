@@ -4,14 +4,16 @@ using Cost_Accounting_2._0.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cost_Accounting_2._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211105111433_edit history")]
+    partial class edithistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,6 +57,9 @@ namespace Cost_Accounting_2._0.Migrations
                     b.Property<int>("ObjectId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TransactionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TypeObject")
                         .HasColumnType("nvarchar(max)");
 
@@ -62,6 +67,8 @@ namespace Cost_Accounting_2._0.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TransactionId");
 
                     b.ToTable("Histories");
                 });
@@ -324,6 +331,13 @@ namespace Cost_Accounting_2._0.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.History", b =>
+                {
+                    b.HasOne("Cost_Accounting_2._0.Models.Transaction", null)
+                        .WithMany("Histories")
+                        .HasForeignKey("TransactionId");
+                });
+
             modelBuilder.Entity("Cost_Accounting_2._0.Models.HistorySign", b =>
                 {
                     b.HasOne("Cost_Accounting_2._0.Models.User", "User")
@@ -406,6 +420,11 @@ namespace Cost_Accounting_2._0.Migrations
             modelBuilder.Entity("Cost_Accounting_2._0.Models.Account", b =>
                 {
                     b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.Transaction", b =>
+                {
+                    b.Navigation("Histories");
                 });
 
             modelBuilder.Entity("Cost_Accounting_2._0.Models.User", b =>
