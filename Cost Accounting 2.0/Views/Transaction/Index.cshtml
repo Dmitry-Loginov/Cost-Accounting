@@ -13,39 +13,54 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.CreditBill)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DebitBill)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
+            @if (User.IsInRole(Role.Admin.ToString()))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.CreditBill.User.UserName)
+                </th>
+            }
             <th></th>
-            @if(User.IsInRole(Role.Admin.ToString()))
-            {<th>
-                @Html.DisplayNameFor(model => model.CreditBill.User.UserName)
-            </th>}
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    if (User.IsInRole(Role.Admin.ToString()) || item.CreditBill.User.UserName == User.Identity.Name)
-    {   <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditBill.Name)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.DebitBill.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            @if(User.IsInRole(Role.Admin.ToString()))
-            {<td>
-                @Html.DisplayFor(modelItem => item.CreditBill.User.UserName)
-            </td>}
+            @if (User.IsInRole(Role.Admin.ToString()))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditBill.User.UserName)
+                </td>
+            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-    }
-}
+    
+ }
     </tbody>
 </table>

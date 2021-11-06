@@ -26,8 +26,17 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transactions.Include(t => t.CreditBill).ThenInclude(cr => cr.User)
-                .Include(t => t.DebitBill).ThenInclude(dt => dt.User).ToListAsync());
+            var transactions = await _context.Transactions.
+                Include(t => t.CreditBill).
+                ThenInclude(cr => cr.User).
+                Include(t => t.DebitBill).
+                ThenInclude(dt => dt.User).
+                ToListAsync();
+
+            User currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
+            if (!User.IsInRole(Role.Admin.ToString()))
+                transactions = transactions.Where(t => t.DebitBill.User == currentUser).ToList();
+            return View(transactions);
         }
 
         // GET: Transaction/Details/5
@@ -39,6 +48,9 @@ namespace Cost_Accounting_2._0.Controllers
             }
 
             var transaction = await _context.Transactions
+                .Include(t => t.CreditBill)
+                .Include(t => t.DebitBill)
+                .ThenInclude(db => db.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transaction == null)
             {
@@ -62,6 +74,7 @@ namespace Cost_Accounting_2._0.Controllers
             TransactionViewModel transactionViewModel = new TransactionViewModel();
             transactionViewModel.CreditListBills = billList;
             transactionViewModel.DebitListBills = billList;
+            transactionViewModel.Date = DateTime.Now;
 
             return View(transactionViewModel);
         }
@@ -89,6 +102,7 @@ namespace Cost_Accounting_2._0.Controllers
             transaction.Amount = transactionViewModel.Amount;
             transaction.CreditBillId = Convert.ToInt32(transactionViewModel.Credit);
             transaction.DebitBillId = Convert.ToInt32(transactionViewModel.Debit);
+            transaction.Description = transactionViewModel.Description;
             return transaction;
         }
 
@@ -120,6 +134,7 @@ namespace Cost_Accounting_2._0.Controllers
                 Credit = transaction.CreditBillId.ToString(),
                 Debit = transaction.DebitBillId.ToString(),
                 Date = transaction.Date,
+                Description = transaction.Description,
                 Id = transaction.Id
             });
         }
@@ -169,6 +184,9 @@ namespace Cost_Accounting_2._0.Controllers
             }
 
             var transaction = await _context.Transactions
+                .Include(t => t.CreditBill)
+                .Include(t => t.DebitBill)
+                .ThenInclude(db => db.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (transaction == null)
             {

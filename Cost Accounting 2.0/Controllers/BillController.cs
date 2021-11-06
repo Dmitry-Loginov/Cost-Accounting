@@ -25,7 +25,11 @@ namespace Cost_billing_2._0.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationContext = _context.Bills.Include(a => a.User);
-            return View(await applicationContext.ToListAsync());
+            var billList = !User.IsInRole(Role.Admin.ToString()) ? 
+                applicationContext.Where(bill => bill.User == _userManager.FindByNameAsync(User.Identity.Name).Result)
+                : applicationContext;
+
+            return View(await billList.ToListAsync());
         }
 
         // GET: Bills/Details/5

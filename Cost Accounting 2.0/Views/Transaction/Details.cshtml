@@ -26,19 +26,25 @@
             @Html.DisplayNameFor(model => model.CreditBill)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CreditBill)
+            @Html.DisplayFor(model => model.CreditBill.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DebitBill)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DebitBill)
+            @Html.DisplayFor(model => model.DebitBill.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DebitBill.User)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DebitBill.User)
+            @Html.DisplayFor(model => model.DebitBill.User.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
 </div>

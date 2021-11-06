@@ -22,6 +22,7 @@ namespace Cost_Accounting_2._0.ViewModels
         public List<SelectListItem> DebitListBills { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        public string Description { get; set; }
 
     }
 }
