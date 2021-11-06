@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cost_Accounting_2._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211106093104_specify amount in transaction")]
-    partial class specifyamountintransaction
+    [Migration("20211106094543_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -216,7 +216,7 @@ namespace Cost_Accounting_2._0.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
+                    Amount = table.Column<decimal>(type: "decimal(18,18)", nullable: false, defaultValue: 0m),
                     CreditBillId = table.Column<int>(type: "int", nullable: false),
                     DebitBillId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)

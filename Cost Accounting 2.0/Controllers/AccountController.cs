@@ -2,6 +2,7 @@
 using Cost_Accounting_2._0.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cost_Accounting_2._0.Controllers
@@ -78,7 +79,8 @@ namespace Cost_Accounting_2._0.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Role.User.ToString());
+
+                    await AddRoleToUser(user);
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
@@ -92,6 +94,17 @@ namespace Cost_Accounting_2._0.Controllers
                 }
             }
             return View(model);
+        }
+
+        async Task AddRoleToUser(User user)
+        {
+            if(_userManager.Users.ToList().Count == 0)
+                await _userManager.AddToRoleAsync(user, Role.Admin.ToString());
+            else
+            {
+                User user1 = _userManager.Users.ToList()[0];
+                await _userManager.AddToRoleAsync(user, Role.User.ToString());
+            }
         }
     }
 }
