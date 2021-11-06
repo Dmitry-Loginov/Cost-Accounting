@@ -19,7 +19,7 @@ namespace Cost_Accounting_2._0.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Cost_Accounting_2._0.Models.Account", b =>
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.Bill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace Cost_Accounting_2._0.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("Cost_Accounting_2._0.Models.History", b =>
@@ -98,23 +98,23 @@ namespace Cost_Accounting_2._0.Migrations
 
                     b.Property<decimal>("Amount")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
+                        .HasColumnType("decimal(18,18)")
                         .HasDefaultValue(0m);
 
-                    b.Property<int>("CreditAccountId")
+                    b.Property<int>("CreditBillId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DebitAccountId")
+                    b.Property<int>("DebitBillId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreditAccountId");
+                    b.HasIndex("CreditBillId");
 
-                    b.HasIndex("DebitAccountId");
+                    b.HasIndex("DebitBillId");
 
                     b.ToTable("Transactions");
                 });
@@ -315,10 +315,10 @@ namespace Cost_Accounting_2._0.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Cost_Accounting_2._0.Models.Account", b =>
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.Bill", b =>
                 {
                     b.HasOne("Cost_Accounting_2._0.Models.User", "User")
-                        .WithMany("Accounts")
+                        .WithMany("Bills")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -335,21 +335,21 @@ namespace Cost_Accounting_2._0.Migrations
 
             modelBuilder.Entity("Cost_Accounting_2._0.Models.Transaction", b =>
                 {
-                    b.HasOne("Cost_Accounting_2._0.Models.Account", "CreditAccount")
+                    b.HasOne("Cost_Accounting_2._0.Models.Bill", "CreditBill")
                         .WithMany()
-                        .HasForeignKey("CreditAccountId")
+                        .HasForeignKey("CreditBillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cost_Accounting_2._0.Models.Account", "DebitAccount")
+                    b.HasOne("Cost_Accounting_2._0.Models.Bill", "DebitBill")
                         .WithMany("Transactions")
-                        .HasForeignKey("DebitAccountId")
+                        .HasForeignKey("DebitBillId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("CreditAccount");
+                    b.Navigation("CreditBill");
 
-                    b.Navigation("DebitAccount");
+                    b.Navigation("DebitBill");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -403,14 +403,14 @@ namespace Cost_Accounting_2._0.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cost_Accounting_2._0.Models.Account", b =>
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.Bill", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("Cost_Accounting_2._0.Models.User", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.Navigation("Bills");
 
                     b.Navigation("HistorySignIns");
                 });

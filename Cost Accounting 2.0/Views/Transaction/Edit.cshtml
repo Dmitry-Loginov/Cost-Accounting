@@ -21,14 +21,14 @@
                 <label asp-for="Credit"></label>
                 <select asp-for="Credit"
                         class="form-control"
-                        asp-items="@(new SelectList(Model.CreditListAccounts,"Value", "Text"))">
+                        asp-items="@(new SelectList(Model.CreditListBills,"Value", "Text"))">
                 </select>
             </div>
             <div class="form-group">
                 <label asp-for="Debit"></label>
                 <select asp-for="Debit"
                         class="form-control"
-                        asp-items="@(new SelectList(Model.DebitListAccounts,"Value", "Text"))">
+                        asp-items="@(new SelectList(Model.DebitListBills,"Value", "Text"))">
                 </select>
             </div>
             <div class="form-group">

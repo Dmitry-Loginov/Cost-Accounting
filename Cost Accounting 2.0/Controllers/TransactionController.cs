@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Cost_Accounting_2._0.ViewModels;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cost_Accounting_2._0.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ApplicationContext _context;
@@ -24,8 +26,8 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Transactions.Include(t => t.CreditAccount).ThenInclude(cr => cr.User)
-                .Include(t => t.DebitAccount).ThenInclude(dt => dt.User).ToListAsync());
+            return View(await _context.Transactions.Include(t => t.CreditBill).ThenInclude(cr => cr.User)
+                .Include(t => t.DebitBill).ThenInclude(dt => dt.User).ToListAsync());
         }
 
         // GET: Transaction/Details/5
@@ -49,7 +51,7 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
-            var accountList = (from account in _context.Accounts
+            var accountList = (from account in _context.Bills
                                 select new SelectListItem()
                                 {
                                     Text = account.Id.ToString() + " " + account.Name,
@@ -57,8 +59,8 @@ namespace Cost_Accounting_2._0.Controllers
                                 }).ToList();
 
             TransactionViewModel transactionViewModel = new TransactionViewModel();
-            transactionViewModel.CreditListAccounts = accountList;
-            transactionViewModel.DebitListAccounts = accountList;
+            transactionViewModel.CreditListBills = accountList;
+            transactionViewModel.DebitListBills = accountList;
 
             return View(transactionViewModel);
         }
@@ -72,16 +74,21 @@ namespace Cost_Accounting_2._0.Controllers
         {
             if (ModelState.IsValid)
             {
-                Transaction transaction = new Transaction();
-                transaction.Date = transactionViewModel.Date;
-                transaction.Amount = transactionViewModel.Amount;
-                transaction.CreditAccountId = Convert.ToInt32(transactionViewModel.Credit);
-                transaction.DebitAccountId = Convert.ToInt32(transactionViewModel.Debit);
-                _context.Add(transaction);
+                _context.Add(FillTransaction(transactionViewModel));
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(transactionViewModel);
+        }
+
+        Transaction FillTransaction(TransactionViewModel transactionViewModel, Transaction transaction = null)
+        {
+            if (transaction == null) transaction = new Transaction();
+            transaction.Date = transactionViewModel.Date;
+            transaction.Amount = transactionViewModel.Amount;
+            transaction.CreditBillId = Convert.ToInt32(transactionViewModel.Credit);
+            transaction.DebitBillId = Convert.ToInt32(transactionViewModel.Debit);
+            return transaction;
         }
 
         // GET: Transaction/Edit/5
@@ -97,7 +104,7 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 return NotFound();
             }
-            var accountList = (from account in _context.Accounts
+            var accountList = (from account in _context.Bills
                                select new SelectListItem()
                                {
                                    Text = account.Id.ToString() + " " + account.Name,
@@ -106,10 +113,10 @@ namespace Cost_Accounting_2._0.Controllers
 
             return View(new TransactionViewModel {
                 Amount = transaction.Amount,
-                CreditListAccounts = accountList,
-                DebitListAccounts = accountList,
-                Credit = transaction.CreditAccountId.ToString(),
-                Debit = transaction.DebitAccountId.ToString(),
+                CreditListBills = accountList,
+                DebitListBills = accountList,
+                Credit = transaction.CreditBillId.ToString(),
+                Debit = transaction.DebitBillId.ToString(),
                 Date = transaction.Date,
                 Id = transaction.Id
             });
@@ -132,11 +139,7 @@ namespace Cost_Accounting_2._0.Controllers
                 try
                 {
                     Transaction transaction = await _context.Transactions.FirstOrDefaultAsync(t => t.Id == transactionViewModel.Id);
-                    transaction.Date = transactionViewModel.Date;
-                    transaction.Amount = transactionViewModel.Amount;
-                    transaction.CreditAccountId = Convert.ToInt32(transactionViewModel.Credit);
-                    transaction.DebitAccountId = Convert.ToInt32(transactionViewModel.Debit);
-                    _context.Update(transaction);
+                    _context.Update(FillTransaction(transactionViewModel, transaction));
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

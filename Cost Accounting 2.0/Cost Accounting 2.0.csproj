@@ -17,11 +17,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Account\" />
-    <Folder Include="Views\User\" />
-    <Folder Include="Views\History\" />
-    <Folder Include="Views\HistorySignIn\" />
-  </ItemGroup>
-
 </Project>

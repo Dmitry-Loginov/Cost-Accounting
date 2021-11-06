@@ -47,6 +47,23 @@ namespace Cost_Accounting_2._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Histories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeObject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ObjectId = table.Column<int>(type: "int", nullable: false),
+                    TypeOperation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Histories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -65,26 +82,6 @@ namespace Cost_Accounting_2._0.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Accounts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,6 +170,26 @@ namespace Cost_Accounting_2._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bills", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Bills_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HistorySigns",
                 columns: table => new
                 {
@@ -200,53 +217,25 @@ namespace Cost_Accounting_2._0.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
-                    CreditAccountId = table.Column<int>(type: "int", nullable: false),
-                    DebitAccountId = table.Column<int>(type: "int", nullable: false),
+                    CreditBillId = table.Column<int>(type: "int", nullable: false),
+                    DebitBillId = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transactions_Accounts_CreditAccountId",
-                        column: x => x.CreditAccountId,
-                        principalTable: "Accounts",
+                        name: "FK_Transactions_Bills_CreditBillId",
+                        column: x => x.CreditBillId,
+                        principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_Accounts_DebitAccountId",
-                        column: x => x.DebitAccountId,
-                        principalTable: "Accounts",
+                        name: "FK_Transactions_Bills_DebitBillId",
+                        column: x => x.DebitBillId,
+                        principalTable: "Bills",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Histories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ObjectId = table.Column<int>(type: "int", nullable: false),
-                    TypeOperation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TransactionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Histories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Histories_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_UserId",
-                table: "Accounts",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -288,9 +277,9 @@ namespace Cost_Accounting_2._0.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Histories_TransactionId",
-                table: "Histories",
-                column: "TransactionId");
+                name: "IX_Bills_UserId",
+                table: "Bills",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HistorySigns_UserId",
@@ -298,14 +287,14 @@ namespace Cost_Accounting_2._0.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_CreditAccountId",
+                name: "IX_Transactions_CreditBillId",
                 table: "Transactions",
-                column: "CreditAccountId");
+                column: "CreditBillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_DebitAccountId",
+                name: "IX_Transactions_DebitBillId",
                 table: "Transactions",
-                column: "DebitAccountId");
+                column: "DebitBillId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -332,13 +321,13 @@ namespace Cost_Accounting_2._0.Migrations
                 name: "HistorySigns");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "Transactions");
 
             migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Bills");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

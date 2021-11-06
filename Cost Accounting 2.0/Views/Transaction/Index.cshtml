@@ -21,13 +21,13 @@
             <th></th>
             @if(User.IsInRole(Role.Admin.ToString()))
             {<th>
-                @Html.DisplayNameFor(model => model.CreditAccount.User.UserName)
+                @Html.DisplayNameFor(model => model.CreditBill.User.UserName)
             </th>}
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-    if (User.IsInRole(Role.Admin.ToString()) || item.CreditAccount.User.UserName == User.Identity.Name)
+    if (User.IsInRole(Role.Admin.ToString()) || item.CreditBill.User.UserName == User.Identity.Name)
     {   <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
@@ -37,7 +37,7 @@
             </td>
             @if(User.IsInRole(Role.Admin.ToString()))
             {<td>
-                @Html.DisplayFor(modelItem => item.CreditAccount.User.UserName)
+                @Html.DisplayFor(modelItem => item.CreditBill.User.UserName)
             </td>}
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

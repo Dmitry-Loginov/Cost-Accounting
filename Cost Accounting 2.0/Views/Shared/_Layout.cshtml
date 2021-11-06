@@ -20,10 +20,10 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Accounts</a>
+                            <a class="nav-link" asp-controller="Bill" asp-action="Index">Bills</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Transactions</a>
+                            <a class="nav-link" asp-controller="Transaction" asp-action="Index">Transactions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">History</a>
@@ -36,12 +36,12 @@
                                 Authorization
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a asp-controller="UserAccount" asp-action="Login" class="dropdown-item">Sign in</a>
-                                <a asp-controller="UserAccount" asp-action="Register" class="dropdown-item">Sign up</a>
+                                <a asp-controller="Account" asp-action="Login" class="dropdown-item">Sign in</a>
+                                <a asp-controller="Account" asp-action="Register" class="dropdown-item">Sign up</a>
                                 @if (User.Identity.IsAuthenticated)
                                 {
                                     <div class="dropdown-divider"></div>
-                                    <form method="post" asp-controller="UserAccount" asp-action="Logout" style="text-align:left;">
+                                    <form method="post" asp-controller="Account" asp-action="Logout" style="text-align:left;">
                                         <input type="submit" value="Sign out" class="dropdown-item" />
                                     </form>
                                 }

@@ -5,7 +5,7 @@ namespace Cost_Accounting_2._0.Models
 {
     public class ApplicationContext : IdentityDbContext<User>
     {
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Bill> Bills { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<HistorySign> HistorySigns { get; set; }
@@ -18,7 +18,7 @@ namespace Cost_Accounting_2._0.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Transaction>().Property(t => t.Amount).HasDefaultValue(0);
-            builder.Entity<Transaction>().HasOne(t => t.DebitAccount).WithMany(da => da.Transactions).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Transaction>().HasOne(t => t.DebitBill).WithMany(da => da.Transactions).OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(builder);
         }
     }

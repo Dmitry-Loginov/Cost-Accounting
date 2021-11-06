@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cost_Accounting_2._0.Models
 {
-    public class Account
+    public class Bill
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Cost_Accounting_2._0.Controllers
 {
-    public class UserAccountController : Controller
+    public class AccountController : Controller
     {
         UserManager<User> _userManager;
         SignInManager<User> _signInManager;
 
-        public UserAccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
