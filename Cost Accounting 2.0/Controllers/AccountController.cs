@@ -2,6 +2,7 @@
 using Cost_Accounting_2._0.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,11 +12,13 @@ namespace Cost_Accounting_2._0.Controllers
     {
         UserManager<User> _userManager;
         SignInManager<User> _signInManager;
+        ApplicationContext Context;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            Context = context;
         }
 
         [HttpGet]
@@ -34,6 +37,7 @@ namespace Cost_Accounting_2._0.Controllers
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    await WriteSignHistory(model.Email, "log in");
                     // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -52,10 +56,21 @@ namespace Cost_Accounting_2._0.Controllers
             return View(model);
         }
 
+        async Task WriteSignHistory(string email, string action)
+        {
+            HistorySign historySign = new HistorySign();
+            historySign.Action = action;
+            historySign.DateTime = DateTime.Now;
+            historySign.User = await _userManager.FindByNameAsync(email);
+            Context.HistorySigns.Add(historySign);
+            Context.SaveChanges();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            await WriteSignHistory(User.Identity.Name, "log out");
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");

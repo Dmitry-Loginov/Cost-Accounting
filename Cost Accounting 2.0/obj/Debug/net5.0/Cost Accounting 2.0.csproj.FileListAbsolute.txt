@@ -163,3 +163,4 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\ref\Cost Accounting 2.0.dll
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.pdb
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.genruntimeconfig.cache
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\HistorySign\Index.cshtml.g.cs
