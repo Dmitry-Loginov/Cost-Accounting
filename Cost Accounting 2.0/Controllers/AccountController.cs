@@ -98,11 +98,10 @@ namespace Cost_Accounting_2._0.Controllers
 
         async Task AddRoleToUser(User user)
         {
-            if(_userManager.Users.ToList().Count == 0)
+            if(_userManager.Users.ToList().Count == 1)
                 await _userManager.AddToRoleAsync(user, Role.Admin.ToString());
             else
             {
-                User user1 = _userManager.Users.ToList()[0];
                 await _userManager.AddToRoleAsync(user, Role.User.ToString());
             }
         }
