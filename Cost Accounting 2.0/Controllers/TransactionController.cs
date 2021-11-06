@@ -51,16 +51,17 @@ namespace Cost_Accounting_2._0.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
-            var accountList = (from account in _context.Bills
+            var billList = (from bill in _context.Bills.
+                               Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                                 select new SelectListItem()
                                 {
-                                    Text = account.Id.ToString() + " " + account.Name,
-                                    Value = account.Id.ToString(),
+                                    Text = bill.Id.ToString() + " " + bill.Name,
+                                    Value = bill.Id.ToString(),
                                 }).ToList();
 
             TransactionViewModel transactionViewModel = new TransactionViewModel();
-            transactionViewModel.CreditListBills = accountList;
-            transactionViewModel.DebitListBills = accountList;
+            transactionViewModel.CreditListBills = billList;
+            transactionViewModel.DebitListBills = billList;
 
             return View(transactionViewModel);
         }
@@ -104,7 +105,8 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 return NotFound();
             }
-            var accountList = (from account in _context.Bills
+            var accountList = (from account in _context.Bills.
+                                Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                                select new SelectListItem()
                                {
                                    Text = account.Id.ToString() + " " + account.Name,

@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Cost_Accounting_2._0.Models;
 using Microsoft.AspNetCore.Authorization;
+using Cost_Accounting_2._0.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace Cost_Accounting_2._0.Controllers
+namespace Cost_billing_2._0.Controllers
 {
     [Authorize]
     public class BillController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly UserManager<User> _userManager; 
 
-        public BillController(ApplicationContext context)
+        public BillController(ApplicationContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Bills
@@ -35,21 +36,21 @@ namespace Cost_Accounting_2._0.Controllers
                 return NotFound();
             }
 
-            var account = await _context.Bills
+            var bill = await _context.Bills
                 .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (account == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(account);
+            return View(bill);
         }
 
         // GET: Bills/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
 
@@ -58,16 +59,20 @@ namespace Cost_Accounting_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId")] Bill account)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId")] Bill bill)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(account);
+                if (!User.IsInRole(Role.Admin.ToString()))
+                {
+                    bill.UserId = _userManager.FindByNameAsync(User.Identity.Name).Result.Id;
+                }
+                _context.Add(bill);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
-            return View(account);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
+            return View(bill);
         }
 
         // GET: Bills/Edit/5
@@ -78,13 +83,13 @@ namespace Cost_Accounting_2._0.Controllers
                 return NotFound();
             }
 
-            var account = await _context.Bills.FindAsync(id);
-            if (account == null)
+            var bill = await _context.Bills.FindAsync(id);
+            if (bill == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
-            return View(account);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
+            return View(bill);
         }
 
         // POST: Bills/Edit/5
@@ -92,9 +97,9 @@ namespace Cost_Accounting_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId")] Bill account)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId")] Bill bill)
         {
-            if (id != account.Id)
+            if (id != bill.Id)
             {
                 return NotFound();
             }
@@ -103,12 +108,12 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 try
                 {
-                    _context.Update(account);
+                    _context.Update(bill);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccountExists(account.Id))
+                    if (!billExists(bill.Id))
                     {
                         return NotFound();
                     }
@@ -119,8 +124,8 @@ namespace Cost_Accounting_2._0.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", account.UserId);
-            return View(account);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
+            return View(bill);
         }
 
         // GET: Bills/Delete/5
@@ -131,15 +136,15 @@ namespace Cost_Accounting_2._0.Controllers
                 return NotFound();
             }
 
-            var account = await _context.Bills
+            var bill = await _context.Bills
                 .Include(a => a.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (account == null)
+            if (bill == null)
             {
                 return NotFound();
             }
 
-            return View(account);
+            return View(bill);
         }
 
         // POST: Bills/Delete/5
@@ -147,13 +152,13 @@ namespace Cost_Accounting_2._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var account = await _context.Bills.FindAsync(id);
-            _context.Bills.Remove(account);
+            var bill = await _context.Bills.FindAsync(id);
+            _context.Bills.Remove(bill);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountExists(int id)
+        private bool billExists(int id)
         {
             return _context.Bills.Any(e => e.Id == id);
         }

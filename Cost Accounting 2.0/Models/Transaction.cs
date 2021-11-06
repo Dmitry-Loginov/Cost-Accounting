@@ -9,7 +9,7 @@ namespace Cost_Accounting_2._0.Models
     {
         public int Id { get; set; }
         [Required]
-        [Column(TypeName ="decimal(18, 18)")]
+        [Column(TypeName ="decimal(10, 4)")]
         public decimal Amount { get; set; }
         public int CreditBillId { get; set; }
         public Bill CreditBill { get; set; }
