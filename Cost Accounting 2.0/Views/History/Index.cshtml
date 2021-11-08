@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Cost_Accounting_2._0.Models.History>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeObject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ObjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOperation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeObject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ObjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOperation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

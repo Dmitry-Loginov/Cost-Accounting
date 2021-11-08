@@ -27,7 +27,7 @@
                         </li>
                         @if(User.IsInRole("Admin")){
                             <li class="nav-item">
-                                <a class="nav-link" href="#">History</a>
+                                <a class="nav-link" asp-controller="History" asp-action="Index">History</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="HistorySign" asp-action="Index">HistorySignIn</a>
