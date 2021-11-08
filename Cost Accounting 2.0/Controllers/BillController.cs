@@ -72,16 +72,10 @@ namespace Cost_billing_2._0.Controllers
                 {
                     bill.UserId = _userManager.FindByNameAsync(User.Identity.Name).Result.Id;
                 }
-                if (_context.Bills.ToList().Where(b => b.Name == bill.Name && b.UserId == _userManager.FindByNameAsync(User.Identity.Name).Result.Id).Count() != 0)
-                {
-                    ModelState.AddModelError("Name", "This bill is exist");
-                    ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
-                    return View(bill);
-                }
                 _context.Add(bill);
                 await _context.SaveChangesAsync();
                 var typeParam = new SqlParameter("@TypeObject", "Bill");
-                var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == bill.Id).FirstOrDefault().Id);
+                var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().LastOrDefault().Id);
                 var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
                 _context.Database.ExecuteSqlRaw("ActionInsert @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 return RedirectToAction(nameof(Index));
@@ -121,15 +115,12 @@ namespace Cost_billing_2._0.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_context.Bills.ToList().Where(b => b.Name == bill.Name && b.UserId == _userManager.FindByNameAsync(User.Identity.Name).Result.Id).Count() != 0)
-                {
-                    ModelState.AddModelError("Name", "This bill is exist");
-                    ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
-                    return View(bill);
-                }
                 try
                 {
-                    _context.Update(bill);
+                    Bill bill1 = _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault();
+                    bill1.Name = bill.Name;
+                    bill1.UserId = bill.UserId;
+                    _context.Update(bill1);
                     await _context.SaveChangesAsync();
                     var typeParam = new SqlParameter("@TypeObject", "Bill");
                     var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Name == bill.Name).FirstOrDefault().Id);

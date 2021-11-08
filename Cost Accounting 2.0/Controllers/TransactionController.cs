@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Cost_Accounting_2._0.ViewModels;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Data.SqlClient;
 
 namespace Cost_Accounting_2._0.Controllers
 {
@@ -88,8 +89,13 @@ namespace Cost_Accounting_2._0.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(FillTransaction(transactionViewModel));
                 await _context.SaveChangesAsync();
+                var typeParam = new SqlParameter("@TypeObject", "Transaction");
+                var idParam = new SqlParameter("@ObjectId", _context.Transactions.ToList().LastOrDefault().Id);
+                var userId = new SqlParameter("@UserId", UserManager.FindByNameAsync(User.Identity.Name).Result.Id);
+                _context.Database.ExecuteSqlRaw("ActionInsert @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 return RedirectToAction(nameof(Index));
             }
             return View(transactionViewModel);
@@ -158,6 +164,10 @@ namespace Cost_Accounting_2._0.Controllers
                     Transaction transaction = await _context.Transactions.FirstOrDefaultAsync(t => t.Id == transactionViewModel.Id);
                     _context.Update(FillTransaction(transactionViewModel, transaction));
                     await _context.SaveChangesAsync();
+                    var typeParam = new SqlParameter("@TypeObject", "Transaction");
+                    var idParam = new SqlParameter("@ObjectId", _context.Transactions.ToList().Where(t => t.Id == id).FirstOrDefault().Id);
+                    var userId = new SqlParameter("@UserId", UserManager.FindByNameAsync(User.Identity.Name).Result.Id);
+                    _context.Database.ExecuteSqlRaw("ActionUpdate @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -202,6 +212,10 @@ namespace Cost_Accounting_2._0.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var transaction = await _context.Transactions.FindAsync(id);
+            var typeParam = new SqlParameter("@TypeObject", "Transaction");
+            var idParam = new SqlParameter("@ObjectId", _context.Transactions.ToList().Where(t => t.Id == id).FirstOrDefault().Id);
+            var userId = new SqlParameter("@UserId", UserManager.FindByNameAsync(User.Identity.Name).Result.Id);
+            _context.Database.ExecuteSqlRaw("ActionDelete @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
             _context.Transactions.Remove(transaction);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
