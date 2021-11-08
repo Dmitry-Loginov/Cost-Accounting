@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Cost_Accounting_2._0.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 
 namespace Cost_billing_2._0.Controllers
 {
@@ -63,7 +64,7 @@ namespace Cost_billing_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId")] Bill bill)
+        public async Task<IActionResult> Create([Bind("Id,Name, UserId")] Bill bill)
         {
             if (ModelState.IsValid)
             {
@@ -71,8 +72,18 @@ namespace Cost_billing_2._0.Controllers
                 {
                     bill.UserId = _userManager.FindByNameAsync(User.Identity.Name).Result.Id;
                 }
+                if (_context.Bills.ToList().Where(b => b.Name == bill.Name && b.UserId == _userManager.FindByNameAsync(User.Identity.Name).Result.Id).Count() != 0)
+                {
+                    ModelState.AddModelError("Name", "This bill is exist");
+                    ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
+                    return View(bill);
+                }
                 _context.Add(bill);
                 await _context.SaveChangesAsync();
+                var typeParam = new SqlParameter("@TypeObject", "Bill");
+                var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == bill.Id).FirstOrDefault().Id);
+                var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
+                _context.Database.ExecuteSqlRaw("ActionInsert @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
@@ -110,10 +121,20 @@ namespace Cost_billing_2._0.Controllers
 
             if (ModelState.IsValid)
             {
+                if (_context.Bills.ToList().Where(b => b.Name == bill.Name && b.UserId == _userManager.FindByNameAsync(User.Identity.Name).Result.Id).Count() != 0)
+                {
+                    ModelState.AddModelError("Name", "This bill is exist");
+                    ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", bill.UserId);
+                    return View(bill);
+                }
                 try
                 {
                     _context.Update(bill);
                     await _context.SaveChangesAsync();
+                    var typeParam = new SqlParameter("@TypeObject", "Bill");
+                    var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Name == bill.Name).FirstOrDefault().Id);
+                    var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
+                    _context.Database.ExecuteSqlRaw("ActionUpdate @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -154,9 +175,13 @@ namespace Cost_billing_2._0.Controllers
         // POST: Bills/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             var bill = await _context.Bills.FindAsync(id);
+            var typeParam = new SqlParameter("@TypeObject", "Bill");
+            var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault().Id);
+            var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
+            _context.Database.ExecuteSqlRaw("ActionDelete @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
             _context.Bills.Remove(bill);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

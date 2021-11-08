@@ -19,6 +19,7 @@ namespace Cost_Accounting_2._0.Models
         {
             builder.Entity<Transaction>().Property(t => t.Amount).HasDefaultValue(0);
             builder.Entity<Transaction>().HasOne(t => t.DebitBill).WithMany(da => da.Transactions).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Bill>().HasIndex(u => u.Name);
             base.OnModelCreating(builder);
         }
     }

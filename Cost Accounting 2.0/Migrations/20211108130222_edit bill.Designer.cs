@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cost_Accounting_2._0.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20211106094543_init")]
-    partial class init
+    [Migration("20211108130222_edit bill")]
+    partial class editbill
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,12 +29,15 @@ namespace Cost_Accounting_2._0.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.HasIndex("UserId");
 
@@ -51,9 +54,6 @@ namespace Cost_Accounting_2._0.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ObjectId")
                         .HasColumnType("int");
 
@@ -63,7 +63,12 @@ namespace Cost_Accounting_2._0.Migrations
                     b.Property<string>("TypeOperation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Histories");
                 });
@@ -100,7 +105,7 @@ namespace Cost_Accounting_2._0.Migrations
 
                     b.Property<decimal>("Amount")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,18)")
+                        .HasColumnType("decimal(10,4)")
                         .HasDefaultValue(0m);
 
                     b.Property<int>("CreditBillId")
@@ -111,6 +116,9 @@ namespace Cost_Accounting_2._0.Migrations
 
                     b.Property<int>("DebitBillId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -321,6 +329,15 @@ namespace Cost_Accounting_2._0.Migrations
                 {
                     b.HasOne("Cost_Accounting_2._0.Models.User", "User")
                         .WithMany("Bills")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Cost_Accounting_2._0.Models.History", b =>
+                {
+                    b.HasOne("Cost_Accounting_2._0.Models.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");

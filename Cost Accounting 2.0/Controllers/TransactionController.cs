@@ -119,18 +119,18 @@ namespace Cost_Accounting_2._0.Controllers
             {
                 return NotFound();
             }
-            var accountList = (from account in _context.Bills.
+            var billList = (from bill in _context.Bills.
                                 Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                                select new SelectListItem()
                                {
-                                   Text = account.Id.ToString() + " " + account.Name,
-                                   Value = account.Id.ToString(),
+                                   Text = bill.Id.ToString() + " " + bill.Name,
+                                   Value = bill.Id.ToString(),
                                }).ToList();
 
             return View(new TransactionViewModel {
                 Amount = transaction.Amount,
-                CreditListBills = accountList,
-                DebitListBills = accountList,
+                CreditListBills = billList,
+                DebitListBills = billList,
                 Credit = transaction.CreditBillId.ToString(),
                 Debit = transaction.DebitBillId.ToString(),
                 Date = transaction.Date,

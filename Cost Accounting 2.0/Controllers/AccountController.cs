@@ -2,7 +2,8 @@
 using Cost_Accounting_2._0.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,7 +38,7 @@ namespace Cost_Accounting_2._0.Controllers
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    await WriteSignHistory(model.Email, "log in");
+                    WriteSignHistory(model.Email, "log in");
                     // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -56,21 +57,18 @@ namespace Cost_Accounting_2._0.Controllers
             return View(model);
         }
 
-        async Task WriteSignHistory(string email, string action)
+        void WriteSignHistory(string email, string action)
         {
-            HistorySign historySign = new HistorySign();
-            historySign.Action = action;
-            historySign.DateTime = DateTime.Now;
-            historySign.User = await _userManager.FindByNameAsync(email);
-            Context.HistorySigns.Add(historySign);
-            Context.SaveChanges();
+            var userId = new SqlParameter("@userId", _userManager.FindByNameAsync(email).Result.Id);
+            var actionParam = new SqlParameter("@action", action);
+            Context.Database.ExecuteSqlRaw("WriteHistorySign @userId, @action", userId, actionParam);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await WriteSignHistory(User.Identity.Name, "log out");
+            WriteSignHistory(User.Identity.Name, "log out");
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");

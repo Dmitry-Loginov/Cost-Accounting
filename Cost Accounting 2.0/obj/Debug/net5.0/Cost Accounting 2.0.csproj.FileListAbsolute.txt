@@ -121,7 +121,6 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.AssemblyInfoInputs.cache
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.AssemblyInfo.cs
@@ -164,3 +163,4 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.pdb
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.genruntimeconfig.cache
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\HistorySign\Index.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
