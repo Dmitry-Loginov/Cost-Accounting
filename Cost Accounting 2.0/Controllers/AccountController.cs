@@ -34,10 +34,19 @@ namespace Cost_Accounting_2._0.Controllers
         {
             if (ModelState.IsValid)
             {
+                User user = await _userManager.FindByNameAsync(model.Email);
+                if (user.Status == Status.Block)
+                {
+                    ModelState.AddModelError("", "The user is blocked");
+                    return View(model);
+                }
+
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
+                   
+
                     WriteSignHistory(model.Email, "log in");
                     // проверяем, принадлежит ли URL приложению
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
@@ -86,7 +95,7 @@ namespace Cost_Accounting_2._0.Controllers
             if (ModelState.IsValid)
             {
                 
-                User user = new User { Email = model.Email, UserName = model.Email};
+                User user = new User { Email = model.Email, UserName = model.Email, Status = Status.Active};
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
 
