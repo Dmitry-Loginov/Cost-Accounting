@@ -34,6 +34,7 @@ namespace Cost_Accounting_2._0.Controllers
                 Include(t => t.DebitBill).
                 ThenInclude(dt => dt.User).
                 ToListAsync();
+            transactions = transactions.Where(t => t.CreditBill.User.IsDeleted == false).ToList();
 
             if(credit != null && credit != 0)
             {
@@ -74,6 +75,7 @@ namespace Cost_Accounting_2._0.Controllers
             result.Transactions = transactions;
 
             var billList = (from bill in _context.Bills.
+                                Where(bill => bill.User.IsDeleted == false).
                                Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                             select new SelectListItem()
                             {
@@ -118,7 +120,8 @@ namespace Cost_Accounting_2._0.Controllers
         public IActionResult Create()
         {
             var billList = (from bill in _context.Bills.
-                               Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
+                            Where(bill => bill.User.IsDeleted == false).
+                             Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                                 select new SelectListItem()
                                 {
                                     Text = bill.Id.ToString() + " " + bill.Name,
@@ -153,6 +156,7 @@ namespace Cost_Accounting_2._0.Controllers
             }
 
             var billList = (from bill in _context.Bills.
+                            Where(bill => bill.User.IsDeleted == false).
                               Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                             select new SelectListItem()
                             {
@@ -193,6 +197,7 @@ namespace Cost_Accounting_2._0.Controllers
                 return NotFound();
             }
             var billList = (from bill in _context.Bills.
+                            Where(bill => bill.User.IsDeleted == false).
                                 Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
                                select new SelectListItem()
                                {

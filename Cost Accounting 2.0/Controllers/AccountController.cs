@@ -40,6 +40,11 @@ namespace Cost_Accounting_2._0.Controllers
                     ModelState.AddModelError("", "The user is blocked");
                     return View(model);
                 }
+                if (user?.IsDeleted == true)
+                {
+                    ModelState.AddModelError("", "The user is blocked");
+                    return View(model);
+                }
 
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);

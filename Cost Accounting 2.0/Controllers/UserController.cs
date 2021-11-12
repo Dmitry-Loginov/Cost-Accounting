@@ -10,11 +10,13 @@ namespace Cost_Accounting_2._0.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly ApplicationContext _context;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, ApplicationContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -36,6 +38,7 @@ namespace Cost_Accounting_2._0.Controllers
                 return Redirect("Index");
             string[] idsSplit = ids.Split(',');
             var currentUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
             if (idsSplit.Contains(currentUser.Id))
             {
                 await _signInManager.SignOutAsync();
@@ -93,6 +96,25 @@ namespace Cost_Accounting_2._0.Controllers
             for (int i = 0; i < idsSplit.Length; i++)
             {
                 users[i].Status = Status.Active;
+                await _userManager.UpdateAsync(users[i]);
+            }
+            return Redirect("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Restore(string ids)
+        {
+            if (ids == null)
+                return Redirect("Index");
+            string[] idsSplit = ids.Split(',');
+            Models.User[] users = new User[idsSplit.Length];
+            for (int i = 0; i < idsSplit.Length; i++)
+            {
+                users[i] = _userManager.FindByIdAsync(idsSplit[i]).Result;
+            }
+
+            for (int i = 0; i < idsSplit.Length; i++)
+            {
+                users[i].IsDeleted = false;
                 await _userManager.UpdateAsync(users[i]);
             }
             return Redirect("Index");

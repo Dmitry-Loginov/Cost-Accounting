@@ -8,7 +8,6 @@
 </form>
 <form method="post" asp-controller="User" asp-action="Unblock" style="display:inline;">
     <button type="submit" class="btn btn-primary" style="margin:2px; display:inline;">
-        <i class="fas fa-unlock-alt"></i>
         Unblock
     </button>
     <input class="Sender" type="text" name="ids" value="" style="visibility:hidden; position:absolute;" />
@@ -16,8 +15,13 @@
 <form method="post" asp-controller="User" asp-action="Delete" style="display:inline;">
     <input class="Sender" type="text" name="ids" value="" style="visibility:hidden; position:absolute;" />
     <button type="submit" class="btn btn-danger" style="margin:2px; display:inline;">
-        <i class="fas fa-trash-alt"></i>
         Delete
+    </button>
+</form>
+<form method="post" asp-controller="User" asp-action="Restore" style="display:inline;">
+    <input class="Sender" type="text" name="ids" value="" style="visibility:hidden; position:absolute;" />
+    <button type="submit" class="btn btn-success" style="margin:2px; display:inline;">
+        Restore
     </button>
 </form>
 <table class="table">
@@ -37,28 +41,34 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDeleted)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.ToList())
         {
-            <tr>
-                <td>
-                    <form method="post">
-                        <input value="@item.Id" name="check" class="form-check-input position-static single-check-box"
-                               aria-label="..." type="checkbox" onclick="Select(this.form.check.value)">
-                    </form>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <form method="post">
+                    <input value="@item.Id" name="check" class="form-check-input position-static single-check-box"
+                           aria-label="..." type="checkbox" onclick="Select(this.form.check.value)">
+                </form>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

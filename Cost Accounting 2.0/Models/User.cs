@@ -23,5 +23,6 @@ namespace Cost_Accounting_2._0.Models
         public List<Bill> Bills { get; set; } = new List<Bill>();
         public List<HistorySign> HistorySignIns { get; set; } = new List<HistorySign>();
         public List<History> Histories { get; set; } = new List<History>();
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -25,7 +25,7 @@ namespace Cost_billing_2._0.Controllers
         // GET: Bills
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Bills.Include(a => a.User).Include(b => b.TypeBill);
+            var applicationContext = _context.Bills.Include(a => a.User).Include(b => b.TypeBill).Where(b => b.User.IsDeleted == false);
             var billList = !User.IsInRole(Role.Admin.ToString()) ? 
                 applicationContext.Where(bill => bill.User == _userManager.FindByNameAsync(User.Identity.Name).Result)
                 : applicationContext;
@@ -179,13 +179,23 @@ namespace Cost_billing_2._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var bill = await _context.Bills.FindAsync(id);
+            var bill = _context.Bills.Include(b => b.TypeBill).Where( b => b.Id == id).FirstOrDefault();
+            try
+            {
+                _context.Bills.Remove(bill);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Has transaction with this bill or bill does not exist. Please, first remove transactions");
+                return View(bill);
+            }
+            
+            
             var typeParam = new SqlParameter("@TypeObject", "Bill");
             var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault().Id);
             var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
             _context.Database.ExecuteSqlRaw("ActionDelete @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
-            _context.Bills.Remove(bill);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
