@@ -12,21 +12,36 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartAmount)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             @if (User.IsInRole(Role.Admin.ToString()))
-             {
+            {
                 <th>
                     @Html.DisplayNameFor(model => model.User)
                 </th>
-             }
+            }
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            @if (item.TypeBill.Type == TypeBills.Active.ToString())
+            {
+                <td> <input type="button" value="Balance" class="btn btn-primary" onclick="getAmount(@item.Id, this);" /></td>
+                <td id="@item.Id">
+                </td>
+            }
+            else
+            {
+                <td></td>
+                <td></td>
+            }
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>

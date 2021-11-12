@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cost_Accounting_2._0.Models.Transaction>
+﻿@model Cost_Accounting_2._0.ViewModels.TransactionListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -9,58 +9,100 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CreditBill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DebitBill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            @if (User.IsInRole(Role.Admin.ToString()))
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.CreditBill.User.UserName)
-                </th>
-            }
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditBill.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DebitBill.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            @if (User.IsInRole(Role.Admin.ToString()))
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreditBill.User.UserName)
-                </td>
-            }
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    
- }
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-2">
+        <form method="get">
+            <div class="form-group">
+                <label class="form-text">Credit</label>
+                <select name="credit" asp-items="@(new SelectList(Model.CreditListBills,"Value", "Text"))" class="form-control"></select>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label class="form-text">Debit</label>
+                <select name="debit" asp-items="@(new SelectList(Model.DebitListBills,"Value", "Text"))" class="form-control"></select>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label class="form-text">Amount from</label>
+                <input name="amountFrom" class="form-control" value="@Model.AmountFrom" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <label class="form-text">Amount to</label>
+                <input name="amountTo" class="form-control" value="@Model.AmountTo" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="DateFrom" class="form-text">Date from</label>
+                <input asp-for="DateFrom" name="dateFrom" class="form-control" value="@Model.DateFrom" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="DateFrom" class="form-text">Date to</label>
+                <input asp-for="DateFrom" name="dateTo" class="form-control" value="@Model.DateTo" />
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Filter" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+    <div class="col-md-auto">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        CreditBill
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        DebitBill
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    @if (User.IsInRole(Role.Admin.ToString()))
+                    {
+                        <th>
+                            User
+                        </th>
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Transactions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreditBill.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DebitBill.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        @if (User.IsInRole(Role.Admin.ToString()))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreditBill.User.UserName)
+                            </td>
+                        }
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

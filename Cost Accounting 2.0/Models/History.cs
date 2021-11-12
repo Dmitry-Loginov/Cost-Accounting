@@ -8,6 +8,7 @@ namespace Cost_Accounting_2._0.Models
         public string TypeObject { get; set; }
         public int ObjectId { get; set; }
         public string TypeOperation { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         public DateTime DateTime { get; set; }
     }

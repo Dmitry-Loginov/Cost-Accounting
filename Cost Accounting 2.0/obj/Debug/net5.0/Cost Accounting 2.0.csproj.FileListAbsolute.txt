@@ -166,3 +166,4 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\History\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Bill\GetAmount.cshtml.g.cs

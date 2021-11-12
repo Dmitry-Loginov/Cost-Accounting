@@ -1,3 +1,4 @@
+using Cost_Accounting_2._0.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,8 @@ namespace Cost_Accounting_2._0
                 try
                 {
                     RoleManager<IdentityRole> roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await RoleInitializer.InitializeAsync(roleManager);
+                    ApplicationContext context = services.GetRequiredService<ApplicationContext>();
+                    await RoleInitializer.InitializeAsync(roleManager, context);
                 }
                 catch(Exception ex)
                 {

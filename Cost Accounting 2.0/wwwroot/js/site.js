@@ -42,3 +42,8 @@ function Select(id) {
     $(".Sender").attr("value", ids);
     $("#CheckBoxGeneral").prop("checked", isTrueSelectAll);
 }
+
+function getAmount(id, sender) {
+    $("#" + id).load('Bill/GetAmount', { 'id': id });
+    sender.blur();
+}

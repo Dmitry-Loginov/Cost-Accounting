@@ -35,7 +35,7 @@ namespace Cost_Accounting_2._0.Controllers
             if (ModelState.IsValid)
             {
                 User user = await _userManager.FindByNameAsync(model.Email);
-                if (user.Status == Status.Block)
+                if (user?.Status == Status.Block)
                 {
                     ModelState.AddModelError("", "The user is blocked");
                     return View(model);

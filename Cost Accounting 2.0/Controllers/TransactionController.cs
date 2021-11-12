@@ -9,6 +9,7 @@ using Cost_Accounting_2._0.ViewModels;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace Cost_Accounting_2._0.Controllers
 {
@@ -25,19 +26,71 @@ namespace Cost_Accounting_2._0.Controllers
         }
 
         // GET: Transaction
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? credit, int? debit, int? amountFrom, int? amountTo, DateTime? dateFrom, DateTime? dateTo)
         {
-            var transactions = await _context.Transactions.
+            List<Transaction> transactions = await _context.Transactions.
                 Include(t => t.CreditBill).
                 ThenInclude(cr => cr.User).
                 Include(t => t.DebitBill).
                 ThenInclude(dt => dt.User).
                 ToListAsync();
 
+            if(credit != null && credit != 0)
+            {
+                transactions = transactions.Where(t => t.CreditBillId == credit).ToList();
+            }
+
+            if(debit != null && debit != 0)
+            {
+                transactions = transactions.Where(t => t.DebitBillId == debit).ToList();
+            }
+
+            if(amountFrom!= null && amountFrom != 0)
+            {
+                transactions = transactions.Where(t => t.Amount >= amountFrom).ToList();
+            }
+
+            if(amountTo != null && amountTo != 0)
+            {
+                transactions = transactions.Where(t => t.Amount <= amountTo).ToList();
+            }
+
+            if(dateFrom != null && dateFrom != default)
+            {
+                transactions = transactions.Where(t => t.Date >= dateFrom).ToList();
+            }
+
+            if(dateTo != null && dateTo != default)
+            {
+                transactions = transactions.Where(t => t.Date <= dateTo).ToList();
+            }
+
             User currentUser = UserManager.FindByNameAsync(User.Identity.Name).Result;
+
             if (!User.IsInRole(Role.Admin.ToString()))
                 transactions = transactions.Where(t => t.DebitBill.User == currentUser).ToList();
-            return View(transactions);
+
+            TransactionListViewModel result = new TransactionListViewModel();
+            result.Transactions = transactions;
+
+            var billList = (from bill in _context.Bills.
+                               Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
+                            select new SelectListItem()
+                            {
+                                Text = bill.Id.ToString() + " " + bill.Name,
+                                Value = bill.Id.ToString(),
+                            }).ToList();
+            billList.Insert(0, new SelectListItem() { Text = "All", Value = "0" });
+
+            result.CreditListBills = billList;
+            result.DebitListBills = billList;
+
+            result.AmountFrom = 0;
+            result.AmountTo = 0;
+            result.DateFrom = default;
+            result.DateTo = default;
+
+            return View(result);
         }
 
         // GET: Transaction/Details/5
@@ -98,6 +151,20 @@ namespace Cost_Accounting_2._0.Controllers
                 _context.Database.ExecuteSqlRaw("ActionInsert @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 return RedirectToAction(nameof(Index));
             }
+
+            var billList = (from bill in _context.Bills.
+                              Where(bill => bill.User == UserManager.FindByNameAsync(User.Identity.Name).Result)
+                            select new SelectListItem()
+                            {
+                                Text = bill.Id.ToString() + " " + bill.Name,
+                                Value = bill.Id.ToString(),
+                            }).ToList();
+
+            transactionViewModel = new TransactionViewModel();
+            transactionViewModel.CreditListBills = billList;
+            transactionViewModel.DebitListBills = billList;
+            transactionViewModel.Date = DateTime.Now;
+
             return View(transactionViewModel);
         }
 
