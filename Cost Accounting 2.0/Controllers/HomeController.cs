@@ -22,11 +22,6 @@ namespace Cost_Accounting_2._0.Controllers
             return RedirectToAction("Index", "Transaction");
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
