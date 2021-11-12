@@ -12,10 +12,10 @@ namespace Cost_Accounting_2._0.Models
         public decimal Amount { get; set; }
         public int CreditBillId { get; set; }
         [Display(Name ="Credit")]
-        public Bill CreditBill { get; set; }
+        public ActiveBill CreditBill { get; set; }
         public int DebitBillId { get; set; }
         [Display(Name = "Debit")]
-        public Bill DebitBill { get; set; }
+        public PassiveBill DebitBill { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public string Description { get; set; }

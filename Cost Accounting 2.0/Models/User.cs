@@ -20,7 +20,7 @@ namespace Cost_Accounting_2._0.Models
     {
         [Required]
         public Status Status { get; set; }
-        public List<Bill> Bills { get; set; } = new List<Bill>();
+        public List<ActiveBill> Bills { get; set; } = new List<ActiveBill>();
         public List<HistorySign> HistorySignIns { get; set; } = new List<HistorySign>();
         public List<History> Histories { get; set; } = new List<History>();
     }

@@ -22,7 +22,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TypeBill.Type)
         </dd>
-        @if (Model.TypeBill.Type == TypeBills.Active.ToString())
+        @if (Model.TypeBill.Type == TypeBill.Active.ToString())
         {
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.StartAmount)

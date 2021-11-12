@@ -16,7 +16,7 @@ namespace Cost_Accounting_2._0
                     await roleManager.CreateAsync(new IdentityRole(role));
             }
 
-            foreach (var type in Enum.GetNames(typeof(TypeBills)))
+            foreach (var type in Enum.GetNames(typeof(TypeBill)))
             {
                 if (context.TypeBills.ToList().Count < 2)
                 {

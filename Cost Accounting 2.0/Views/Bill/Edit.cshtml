@@ -18,7 +18,7 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            @if (Model.TypeBill.Type == TypeBills.Active.ToString())
+            @if (Model.TypeBill.Type == TypeBill.Active.ToString())
             {
                 <div class="form-group">
                     <label asp-for="StartAmount" class="control-label"></label>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cost_Accounting_2._0.Models.Bill>
+﻿@model IEnumerable<Cost_Accounting_2._0.Models.ActiveBill>
 
 @{
     ViewData["Title"] = "Index";
@@ -31,7 +31,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @if (item.TypeBill.Type == TypeBills.Active.ToString())
+            @if (item.TypeBill.Type == TypeBill.Active.ToString())
             {
                 <td> <input type="button" value="Balance" class="btn btn-primary" onclick="getAmount(@item.Id, this);" /></td>
                 <td id="@item.Id">

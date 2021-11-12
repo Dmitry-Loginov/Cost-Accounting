@@ -25,7 +25,9 @@ namespace Cost_billing_2._0.Controllers
         // GET: Bills
         public async Task<IActionResult> Index()
         {
-            var applicationContext = _context.Bills.Include(a => a.User).Include(b => b.TypeBill);
+            List< actContext = _context.ActiveBills.Include(a => a.User).ToList();
+            var pasContext = _context.PassiveBills.Include(a => a.User).ToList();
+            actContext.Concat(pasContext);
             var billList = !User.IsInRole(Role.Admin.ToString()) ? 
                 applicationContext.Where(bill => bill.User == _userManager.FindByNameAsync(User.Identity.Name).Result)
                 : applicationContext;
@@ -66,7 +68,7 @@ namespace Cost_billing_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name, UserId, StartAmount, TypeBillId")] Bill bill)
+        public async Task<IActionResult> Create([Bind("Id,Name, UserId, StartAmount, TypeBillId")] ActiveBill bill)
         {
             if (ModelState.IsValid)
             {
@@ -110,7 +112,7 @@ namespace Cost_billing_2._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartAmount,TypeBillId")] Bill bill)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartAmount,TypeBillId")] ActiveBill bill)
         {
             if (id != bill.Id)
             {
@@ -121,7 +123,7 @@ namespace Cost_billing_2._0.Controllers
             {
                 try
                 {
-                    Bill bill1 = _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault();
+                    ActiveBill bill1 = _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault();
                     bill1.Name = bill.Name;
                     bill1.UserId = bill.UserId;
                     bill1.TypeBillId = bill.TypeBillId;
