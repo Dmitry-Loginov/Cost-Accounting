@@ -65,7 +65,7 @@ namespace Cost_Accounting_2._0.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    ModelState.AddModelError("", "Incorrect login and (or) password");
                 }
             }
             return View(model);

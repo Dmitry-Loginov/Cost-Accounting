@@ -182,6 +182,10 @@ namespace Cost_billing_2._0.Controllers
             var bill = _context.Bills.Include(b => b.TypeBill).Where( b => b.Id == id).FirstOrDefault();
             try
             {
+                var typeParam = new SqlParameter("@TypeObject", "Bill");
+                var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault().Id);
+                var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
+                _context.Database.ExecuteSqlRaw("ActionDelete @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
                 _context.Bills.Remove(bill);
                 await _context.SaveChangesAsync();
             }
@@ -190,12 +194,7 @@ namespace Cost_billing_2._0.Controllers
                 ModelState.AddModelError("", "Has transaction with this bill or bill does not exist. Please, first remove transactions");
                 return View(bill);
             }
-            
-            
-            var typeParam = new SqlParameter("@TypeObject", "Bill");
-            var idParam = new SqlParameter("@ObjectId", _context.Bills.ToList().Where(b => b.Id == id).FirstOrDefault().Id);
-            var userId = new SqlParameter("@UserId", _userManager.FindByNameAsync(User.Identity.Name).Result.Id);
-            _context.Database.ExecuteSqlRaw("ActionDelete @TypeObject, @ObjectId, @UserId", typeParam, idParam, userId);
+           
             return RedirectToAction(nameof(Index));
         }
 
