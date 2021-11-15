@@ -1,0 +1,73 @@
+﻿<h3>Справочная система</h3>
+<div class="row">
+    <div class="col-md-6">
+        <a asp-action="Home">Начальная страница</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Заголовок и подвал
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="Menu" class="dropdown-item">Меню</a>
+                    <a asp-action="Footer" class="dropdown-item">Подвал</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Работа с учетными записями
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="SignUp" class="dropdown-item">Регистрация</a>
+                    <a asp-action="SignIn" class="dropdown-item">Авторизация</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Работа со счетами
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="BillList" class="dropdown-item">Список счетов</a>
+                    <a asp-action="CreateEditBill" class="dropdown-item">Создание, изменение счета</a>
+                    <a asp-action="DescDelBill" class="dropdown-item">Описание, удаление счета</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Работа с транзакциями
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="TransactList" class="dropdown-item">Список транзакция. Филтрация</a>
+                    <a asp-action="CreateEditTransact" class="dropdown-item">Создание, изменение транзакции</a>
+                    <a asp-action="DescDelTransact" class="dropdown-item">Описание, удаление транзакции</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    История
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="HistoryAct" class="dropdown-item">История действий</a>
+                    <a asp-action="HistorySign" class="dropdown-item">История входов</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Работа с пользователями
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a asp-action="AdminPanel" class="dropdown-item">Админ панель</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    </div>

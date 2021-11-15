@@ -166,3 +166,17 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Bill\GetAmount.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\Index.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\AdminPanel.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\BillList.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\CreateEditBill.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\DescDelBill.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\DescDelTransact.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\Footer.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\Home.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\Menu.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\SignIn.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\SignUp.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\TransactList.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\CreateEditTransact.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\History.cshtml.g.cs
