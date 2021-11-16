@@ -21,11 +21,5 @@ namespace Cost_Accounting_2._0.Controllers
                 return View();
             return RedirectToAction("Index", "Transaction");
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

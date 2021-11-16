@@ -143,7 +143,6 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Bill\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Shared\AdminLink.cshtml.g.cs
-C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Transaction\Create.cshtml.g.cs
@@ -164,7 +163,6 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\HistorySign\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\History\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\User\Index.cshtml.g.cs
-C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Bill\GetAmount.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\Index.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\AdminPanel.cshtml.g.cs
@@ -180,3 +178,5 @@ C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accountin
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\TransactList.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\CreateEditTransact.cshtml.g.cs
 C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Razor\Views\Help\History.cshtml.g.cs
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\obj\Debug\net5.0\Cost Accounting 2.0.csprojAssemblyReference.cache
+C:\Users\Student\Desktop\курсоваяБд\Cost Accounting 2.0\Cost Accounting 2.0\bin\Debug\net5.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll

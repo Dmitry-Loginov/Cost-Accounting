@@ -13,7 +13,7 @@ namespace Cost_Accounting_2._0.Models
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kMRRu1dRNZ+eah+WariD51OPV2ynUrY7+oMopcWzcnIBKHgYGxo0JyRJQF7y6Cr8T8vptqHD1re0vicFzsQZag==",
+  "dgSpecHash": "rRagKqTpQk9wPsQDqDYCwP4WqEFYpfR8pBG0xHr6gI0m9isfjGT7ei4Lr/d4EMb5PXLPBPAe+7krPsv4/e/D2w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Student\\Desktop\\курсоваяБд\\Cost Accounting 2.0\\Cost Accounting 2.0\\Cost Accounting 2.0.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.11\\microsoft.aspnetcore.cryptography.internal.5.0.11.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.11\\microsoft.aspnetcore.cryptography.keyderivation.5.0.11.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\5.0.11\\microsoft.aspnetcore.diagnostics.entityframeworkcore.5.0.11.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\5.0.11\\microsoft.aspnetcore.identity.entityframeworkcore.5.0.11.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

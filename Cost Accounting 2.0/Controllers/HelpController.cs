@@ -60,12 +60,7 @@ namespace Cost_Accounting_2._0.Controllers
             return View();
         }
 
-        public IActionResult HistoryAct()
-        {
-            return View();
-        }
-
-        public IActionResult HistorySign()
+        public IActionResult History()
         {
             return View();
         }
